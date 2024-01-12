@@ -62,7 +62,7 @@ nav .others .link {
     color: var(--black_color);
     text-decoration: none;
 
-    transition: transform 0.5s;
+    will-change: transform;
 }
 nav .others .link:hover {
     transform: translateX(-.25em);

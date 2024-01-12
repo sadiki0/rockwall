@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from "react";
 
 import MinimalLogo from "./poly rockwall logo.svg"
 
+import applyWaveEffect from "./wave";
+
 import "./styles.css"
 import "./landing.css"
 
@@ -10,29 +12,14 @@ export default () => {
   
   useEffect(() => {
     let logo = document.querySelector("#navigation-rockwall-logo");
+    let links = document.querySelectorAll("nav .link");
     let startTime = Date.now();
 
-    renderNavigation();
+    links.forEach((element) => {
+      applyWaveEffect(startTime, element);
+    });
 
-
-    function renderNavigation() {
-      const waveResolution = 75;
-      const waveAmplitude = 3;
-      const runtime = (Date.now() - startTime)/waveResolution;
-
-      const logoRect = logo.getBoundingClientRect();
-      const logoMiddle = (logoRect.right + logoRect.left) / 2;
-      const logoSize = logoRect.right - logoRect.left;
-
-      const leftLogoPoint  =  Math.sin((Math.PI * (runtime + logoRect.left) * 2) / waveResolution) * waveAmplitude;
-      const rightLogoPoint =  Math.sin((Math.PI * (runtime + logoRect.right) * 2) / waveResolution) * waveAmplitude - leftLogoPoint;
-      //const centerLogoPoint = Math.sin((Math.PI * (runtime + logoMiddle) * 2) / waveResolution) * waveAmplitude;
-      const centerLogoPoint = (leftLogoPoint + rightLogoPoint) / 2;
-      logo.style.transform = `translateY(${leftLogoPoint}px) rotate(${Math.asin(rightLogoPoint/logoSize)}rad)`;
-
-
-      requestAnimationFrame(renderNavigation);
-    }
+    applyWaveEffect(startTime, logo);
   })
 
 
